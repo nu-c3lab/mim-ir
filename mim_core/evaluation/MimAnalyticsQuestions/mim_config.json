@@ -1,0 +1,92 @@
+{
+    "interaction_manager": {
+        "type": "InteractionManager",
+        "language_generator": {
+            "type": "HotpotQAGenerator",
+            "single_entity_response": true
+        },
+        "print_plan": true
+    },
+    "question_analyzer": {
+        "type": "QuestionAnalyzer",
+        "high_level_question_decomposer": {
+            "type": "T5HighLevelDecomposer",
+            "use_gpu": true
+        },
+        "ontology": {
+            "type": "WikidataOntology",
+            "spacy_model": "en_core_web_trf"
+        },
+        "relation_extraction_method": "ontology",
+        "question_generator": {
+            "type": "RuleBasedQuestionGenerator"
+        },
+        "answer_type_classifier": {
+            "type": "TRECAnswerTypeClassifier",
+            "use_gpu": true
+        },
+        "use_gpu_for_complex_question_classification": true
+    },
+    "answer_engine": {
+        "type": "AnswerEngine",
+        "answerable_question_types": ["simple-retrieval", "complex-retrieval", "analysis", "explanation"],
+        "answer_evaluator": {
+            "type": "AnswerEvaluator",
+            "feature_combination_mode": "sum",
+            "do_output_feature_vectors": false,
+            "feature_vector_output_dir": "/Users/marko/Desktop/",
+            "ontology": {
+                "type": "WikidataOntology",
+                "spacy_model": "en_core_web_trf"
+            },
+            "scoring_functions": [
+                {
+                    "type": "ConfidenceScorer"
+                },
+                {
+                    "type": "SourceScorer",
+                    "scoring_dict": {
+                        "NeuralSearchComponent": 1.0,
+                        "AnalyticsEngine": 1.0
+                    }
+                }
+            ]
+        },
+        "question_answering_components": [
+            {
+                "type": "HighLevelNeuralSearchComponent",
+                "ontology": {
+                    "type": "WikidataOntology",
+                    "spacy_model": "en_core_web_trf"
+                },
+                "document_sources": [
+                    {
+                        "type": "BeerQASource",
+                        "max_documents": 30,
+                        "max_passages": 5,
+                        "passage_ranking_mode": "msmarco_cross",
+                        "generate_keywords": true
+                    }
+                ],
+                "project_model": {
+                    "type": "RobertaSquadModel",
+                    "topk": 3,
+                    "use_gpu": true
+                },
+                "search_threshold": 0.0,
+                "max_project_results": 2,
+                "max_select_results": 2,
+                "max_set_ops_inputs": 15,
+                "filter_model": {
+                    "type": "RobertaBaseBoolQModel",
+                    "use_gpu": true
+                },
+                "filter_threshold": 0.7,
+                "simple_doc_weight": 0.3,
+                "simple_answer_weight": 0.7,
+                "complex_doc_weight": 0.5,
+                "complex_answer_weight": 0.5
+            }
+        ]
+    }
+}

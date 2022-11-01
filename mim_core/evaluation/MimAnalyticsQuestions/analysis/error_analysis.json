@@ -1,0 +1,422 @@
+[
+    {
+        "question": "What is the sum of the oxygen and hydrogen atoms in H2O?",
+        "q_id": "810cc54d-41e2-4b20-ba5f-0d6dcd1a1aa6",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "What is the sum of the number of plays written by Shakespeare and Sophocles?",
+        "q_id": "8d93e0ec-7514-4c09-a9aa-3c3f75121384",
+        "errors": [
+            "MissingPreviousStepDataError: Required dataframe from a previous step is not available."
+        ]
+    },
+    {
+        "question": "What is the combined number Sherlock Holmes novels and short stories?",
+        "q_id": "11919dd6-8f5e-4c80-b8bd-b696b594aa88",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "What is the sum of the number of narrative films and documentary films directed by Martin Scorsese?",
+        "q_id": "957f875b-1d97-4846-bd0d-d40fcd0881c0",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "What is the combined number of championships won by LeBron James and Stephen Curry?",
+        "q_id": "46594a11-23e2-41f6-8d78-fff4b49d5ffe",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "What is the total number of times that India and the West Indies have won the Cricket World Cup?",
+        "q_id": "e3801632-49c9-417d-970e-c63d4a8defcc",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "What is the combined combat range without refueling of the B-52 Stratofortress and B-29 Superfortress?",
+        "q_id": "bb299b19-bf12-4795-a82b-5adeced8ad44",
+        "errors": [
+            "AttributeError: 'NoneType' object has no attribute 'arguments'"
+        ]
+    },
+    {
+        "question": "What is the total number of sovereign states in Europe and South America?",
+        "q_id": "e6b75654-ba51-45bb-a576-23036a131734",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "Does water have a lower boiling point than nitrogen?",
+        "q_id": "6aacd178-d9a6-4eeb-93c5-405326dddc0e",
+        "errors": [
+            "DimensionalityError: Cannot convert from 'coulomb' ([current] * [time]) to 'degree_Celsius' ([temperature])"
+        ]
+    },
+    {
+        "question": "Has Roald Dahl books sold at least 200 million copies worldwide?",
+        "q_id": "78ddcceb-f26d-4d92-bdbe-ebe869b75ba5",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "Did Avatar earn more at the box office worldwide than Titanic?",
+        "q_id": "1b23ee61-6601-4eb7-b5f9-9cd48a062698",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type 'more of @@2@@ than @@3@@' is not currently supported."
+        ]
+    },
+    {
+        "question": "Was The Safety Dance on the Billboard Hot 100 for longer than Take on Me?",
+        "q_id": "624fc740-b30f-4444-89a0-829e157acfaa",
+        "errors": [
+            "AttributeError: 'NoneType' object has no attribute 'arguments'"
+        ]
+    },
+    {
+        "question": "Did Kobe Bryant win more than five NBA championships?",
+        "q_id": "bd57c106-fbc3-432e-a1b3-283d26dc7eaf",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "Was Warcraft III released before Halo 2?",
+        "q_id": "efda0acd-217c-4177-a37c-60f2b9c05663",
+        "errors": [
+            "MissingPreviousStepDataError: Required dataframe from a previous step is not available."
+        ]
+    },
+    {
+        "question": "Have there been more Republican presidents than Democratic presidents?",
+        "q_id": "3dd0ca06-6a1f-4577-bc73-dfbd43c042f4",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "Are there less than 50 states in the contiguous United States?",
+        "q_id": "acea6cdf-12b8-48cf-9fec-c940c49d0b68",
+        "errors": [
+            "IndexError: list index out of range"
+        ]
+    },
+    {
+        "question": "Are there 30 countries in Europe?",
+        "q_id": "dc6232c8-efb1-40dc-98ee-cf2cb597c1c3",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type '30' is not currently supported."
+        ]
+    },
+    {
+        "question": "Is Rome older than Miami?",
+        "q_id": "e3b3c775-5dba-48e2-b167-a4ee051ddebc",
+        "errors": [
+            "DimensionalityError: Cannot convert from 'millennium' ([time]) to 'dimensionless' (dimensionless)"
+        ]
+    },
+    {
+        "question": "Is there a visible color with a wavelength longer than 700 nanometers?",
+        "q_id": "71d08970-b251-4d3b-a63f-4e39381290f3",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "Does there exist a naturally occurring element with atomic number higher than 94?",
+        "q_id": "ee22065e-736a-43dd-a804-ad7a9c25490c",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type 'exists' is not currently supported."
+        ]
+    },
+    {
+        "question": "Does there exist an animal with more than 1000 legs?",
+        "q_id": "ccc02ae0-f164-462e-9ab9-9583dbaed0fd",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type 'exists' is not currently supported."
+        ]
+    },
+    {
+        "question": "Is there a book series with over 100 volumes?",
+        "q_id": "673c3fd1-76ce-49d0-88c8-29e4863de389",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type '' is not currently supported."
+        ]
+    },
+    {
+        "question": "Has there been a film that has grossed at least $3 billion worldwide?",
+        "q_id": "7a606c9d-1a5f-482d-8dd4-dd090d1d50f3",
+        "errors": [
+            "MissingPreviousStepDataError: Required dataframe from a previous step is not available."
+        ]
+    },
+    {
+        "question": "Has an actor ever played the same character more than 16 times?",
+        "q_id": "0dffe375-3b6a-4ac4-8f9d-e5f5d905f4eb",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type 'has ' is not currently supported."
+        ]
+    },
+    {
+        "question": "Does there exist a film longer than the movie Logistics?",
+        "q_id": "33172b35-0931-4bfd-94c7-db46b5c8caed",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type 'exists' is not currently supported."
+        ]
+    },
+    {
+        "question": "Has an actor ever won two Academy Awards in the same year?",
+        "q_id": "d1f45f2c-b1de-44d4-8346-1c75dfbe9500",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type 'has ' is not currently supported."
+        ]
+    },
+    {
+        "question": "Is there a guitar with more than 12 necks",
+        "q_id": "21185fe8-4f20-43da-b490-70f55cc7abb4",
+        "errors": [
+            "MissingPreviousStepDataError: Required dataframe from a previous step is not available."
+        ]
+    },
+    {
+        "question": "Is there a painter that produced more than 280 thousand paintings?",
+        "q_id": "b3e604dd-5767-4ccf-bae9-6249e9abaf51",
+        "errors": [
+            "MissingPreviousStepDataError: Required dataframe from a previous step is not available."
+        ]
+    },
+    {
+        "question": "Is there a manmade structure that spans longer than 20000 kilometers?",
+        "q_id": "db572e7b-62ca-4898-aede-edfa7a92ad4c",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type '' is not currently supported."
+        ]
+    },
+    {
+        "question": "Does there exist a professional sport involving more than 400 players on a team?",
+        "q_id": "7a07a7f3-1aaa-4d19-9119-4705021d8570",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type 'exists' is not currently supported."
+        ]
+    },
+    {
+        "question": "Does there exist a naturally occurring material that is harder than diamonds?",
+        "q_id": "6eef7cb0-fb2b-4bc5-81ba-90a00027ef45",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type 'exists' is not currently supported."
+        ]
+    },
+    {
+        "question": "Is there a video game console that has sold more than 150 million units?",
+        "q_id": "de2efeef-fffe-4b04-8f70-1d8fe08d371d",
+        "errors": [
+            "MissingPreviousStepDataError: Required dataframe from a previous step is not available."
+        ]
+    },
+    {
+        "question": "Has there been a president of the United States that is younger than 35 years old?",
+        "q_id": "009eba8f-bb29-48ba-8c3f-517c0e838e83",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "Is there any political party with over 100 million members?",
+        "q_id": "cd81e553-26f3-4436-b0e6-ff6fbd873f90",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type 'inequality operation on objects that are not fully numeric' is not currently supported."
+        ]
+    },
+    {
+        "question": "Is there a country with over 1 billion citizens?",
+        "q_id": "07e43025-aa07-4b7f-bd3d-01cdfe79c83c",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "In what state is the city where the studio that originally created a video game about a genetically enhanced bandicoot located?",
+        "q_id": "46c97fcc-1bf7-4dfd-b3b5-8a52f5440aa2",
+        "errors": [
+            "AttributeError: 'NoneType' object has no attribute 'arguments'"
+        ]
+    },
+    {
+        "question": "Which has a higher melting point, iodine or lithium?",
+        "q_id": "d2f51750-6f41-4620-986b-cedd2b718d1c",
+        "errors": [
+            "TokenError: ('EOF in multi-line statement', (2, 0))"
+        ]
+    },
+    {
+        "question": "Are there more breeds of dogs or cats?",
+        "q_id": "818f7239-9f1f-4adb-9f57-4f26b9a3fc67",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "Which is faster, the speed of sound on air or in water?",
+        "q_id": "de2e971d-fd5b-4a1d-bb78-092a3df887da",
+        "errors": [
+            "AttributeError: 'NoneType' object has no attribute 'arguments'"
+        ]
+    },
+    {
+        "question": "Which film spurred more sequels, Iron Man or Thor?",
+        "q_id": "1de04efd-7094-4368-b59e-6261f15c4b51",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "Have more actors played Doctor Who or James Bond?",
+        "q_id": "e34e3078-fb8b-4beb-a26c-8c81c5a9c6f7",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "Which has a longer scale length, an electric guitar or a bass guitar?",
+        "q_id": "357ce7c7-aebd-4e03-a9d2-dab3586cc309",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "Which was invented first, the tuba or the french horn?",
+        "q_id": "a2cbcacd-0ff7-43b7-b932-8916831abe56",
+        "errors": [
+            "TypeError: '>' not supported between instances of 'NoneType' and 'NoneType'"
+        ]
+    },
+    {
+        "question": "Which album has a lower ranking on Rolling Stone's 2003 list of The 500 Greatest Albums of All Time, Achtung Baby or The Joshua Tree?",
+        "q_id": "97b3e387-a82c-415a-a2a0-3ca81158f7ba",
+        "errors": [
+            "DimensionalityError: Cannot convert from 'dimensionless' (dimensionless) to 'thou' ([length])"
+        ]
+    },
+    {
+        "question": "Who was in power longer, Lenin or Stalin?",
+        "q_id": "b4622c2d-7f78-4a8c-9eed-d0153d5c9a14",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "Which started first, the Roman-Seleucid War or the Pyrrhic War? ",
+        "q_id": "881b1c4d-c677-4a43-a13e-e5287261051b",
+        "errors": [
+            "TypeError: '>' not supported between instances of 'NoneType' and 'NoneType'"
+        ]
+    },
+    {
+        "question": "Which started first, the French Revolution or the American Revolutionary War?",
+        "q_id": "99062fc8-ebf7-4dac-b2dc-bf5e56ed0dfa",
+        "errors": [
+            "TypeError: '>' not supported between instances of 'datetime.datetime' and 'NoneType'"
+        ]
+    },
+    {
+        "question": "Who was born first, Nikola Tesla or Thomas Edison? ",
+        "q_id": "f948c4c0-c7ba-4bdb-a7ba-b1cdf042a784",
+        "errors": [
+            "TypeError: '>' not supported between instances of 'NoneType' and 'datetime.datetime'"
+        ]
+    },
+    {
+        "question": "Which fell last, the Western Roman Empire or the Byzantine Empire?",
+        "q_id": "3d21927d-a924-4e80-a25a-513144247cee",
+        "errors": [
+            "UnhandledSubOperationTypeError: The sub-operation type 'later' is not currently supported."
+        ]
+    },
+    {
+        "question": "Which of Minnesota United FC and Real Madrid CF is part of Major League Soccer (MLS)?",
+        "q_id": "f4ba031d-c675-4ccb-8b74-436894c8f7d2",
+        "errors": [
+            "AttributeError: 'NoneType' object has no attribute 'arguments'"
+        ]
+    },
+    {
+        "question": "Which country is larger, Russia or Australia?",
+        "q_id": "aa0335ec-1ba0-4539-9a09-8a35a9430162",
+        "errors": [
+            "TokenError: ('EOF in multi-line statement', (2, 0))"
+        ]
+    },
+    {
+        "question": "Who directed both Spy Kids and Sin City?",
+        "q_id": "47e51675-b886-4de3-8085-0d158bc297f2",
+        "errors": [
+            "IndexError: list index out of range"
+        ]
+    },
+    {
+        "question": "Who was both a justice of the Supreme Court of the United States and a graduate of Northwestern University?",
+        "q_id": "0b5c56eb-0361-4c77-a6e1-f06795130a92",
+        "errors": [
+            "IndexError: list index out of range"
+        ]
+    },
+    {
+        "question": "How much faster is the speed of light than the speed of sound?",
+        "q_id": "47a5fb21-f862-4379-985f-bc8458a8d16f",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "How much faster is the peregrine falcon than the white-throated needletail swift?",
+        "q_id": "095be883-2f13-49f5-9778-03d513d4a248",
+        "errors": [
+            "AttributeError: 'NoneType' object has no attribute 'arguments'"
+        ]
+    },
+    {
+        "question": "How long after the publication of The Spy Who Loved Me was Ian Fleming's death?",
+        "q_id": "97bd2a1b-3352-4628-938e-cd4c2674ea3b",
+        "errors": [
+            "AttributeError: 'NoneType' object has no attribute 'arguments'"
+        ]
+    },
+    {
+        "question": "How many more times has Australia won the Cricket World Cup than England?",
+        "q_id": "c100e25a-a066-4cda-925f-dc3232ba458c",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "How much more total area does Italy have than Switzerland?",
+        "q_id": "a458d9e4-a9dd-4cfb-b6b6-f4e7a1526a9c",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "How much taller is the Willis Tower than the Empire State Building?",
+        "q_id": "f6ee401d-1dd6-4e37-b9b9-d5c8a8898912",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    },
+    {
+        "question": "How much larger is Scotland than Wales?",
+        "q_id": "d40a7eb4-716d-4ca6-9486-32ed229cf52a",
+        "errors": [
+            "ValueError: No valid number words found! Please enter a valid number word (eg. two million twenty three thousand and forty nine)"
+        ]
+    }
+]

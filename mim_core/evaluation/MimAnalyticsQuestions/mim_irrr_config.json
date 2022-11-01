@@ -1,0 +1,67 @@
+{
+    "interaction_manager": {
+        "type": "InteractionManager",
+        "language_generator": {
+            "type": "HotpotQAGenerator",
+            "single_entity_response": true
+        },
+        "print_plan": true
+    },
+    "question_analyzer": {
+        "type": "QuestionAnalyzer",
+        "high_level_question_decomposer": {
+            "type": "T5HighLevelDecomposer",
+            "use_gpu": true
+        },
+        "ontology": {
+            "type": "WikidataOntology",
+            "spacy_model": "en_core_web_trf"
+        },
+        "relation_extraction_method": "ontology",
+        "question_generator": {
+            "type": "RuleBasedQuestionGenerator"
+        },
+        "answer_type_classifier": {
+            "type": "TRECAnswerTypeClassifier",
+            "use_gpu": true
+        },
+        "use_gpu_for_complex_question_classification": true
+    },
+    "answer_engine": {
+        "type": "AnswerEngine",
+        "answerable_question_types": ["simple-retrieval", "complex-retrieval", "analysis", "explanation"],
+        "answer_evaluator": {
+            "type": "AnswerEvaluator",
+            "feature_combination_mode": "sum",
+            "do_output_feature_vectors": false,
+            "feature_vector_output_dir": "/Users/marko/Desktop/",
+            "ontology": {
+                "type": "WikidataOntology",
+                "spacy_model": "en_core_web_trf"
+            },
+            "scoring_functions": [
+                {
+                    "type": "ConfidenceScorer"
+                },
+                {
+                    "type": "SourceScorer",
+                    "scoring_dict": {
+                        "NeuralSearchComponent": 1.0,
+                        "AnalyticsEngine": 1.0
+                    }
+                }
+            ]
+        },
+        "question_answering_components": [
+            {
+                "type": "IRRRAnsweringComponent",
+                "intermediate_answer_dir": "/home/cameron/Documents/IRRR/output/",
+                "intermediate_answer_filename": "answer_predictions.json",
+                "intermediate_question_dir": "/home/cameron/Documents/mim-core/questions/",
+                "intermediate_question_filename": "mim_beerqa_formatted_questions.json",
+                "num_hops": 2,
+                "num_passages_per_it": 30
+            }
+        ]
+    }
+}
