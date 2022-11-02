@@ -19,10 +19,11 @@ Authors: C3 Lab
 import re
 import json
 import torch
-from jumbodb import Jumbo
 from typing import List, Dict
 from bs4 import BeautifulSoup
 from urllib.parse import unquote
+from elasticsearch import Elasticsearch
+from elasticsearch.client.indices import IndicesClient
 from mim_core.structs.Document import Document, Passage
 from mim_core.components.models import get_model
 from mim_core.components.Search.DocumentSources.DocumentSource import DocumentSource
@@ -49,7 +50,13 @@ class BeerQASource(DocumentSource):
 
     def __init__(self, **kwargs):
         super().__init__()
-        self.jdb = kwargs.get('db', Jumbo(True))
+        self.creds_username = kwargs.get('creds_username', '')
+        self.creds_password = kwargs.get('creds_password', '')
+        self.creds_uri = kwargs.get('creds_uri', None)
+        if not self.creds_uri:
+            raise ValueError("URI is required to configure BeerQASource.")
+        self.document_client = Elasticsearch(self.creds_uri, http_auth=(self.creds_username, self.creds_password) if self.creds_password else None)
+        self.index_client = IndicesClient(self.document_client)
         self.index_name = kwargs.get('index_name', 'beerqa_wiki_doc_para')
         self.max_docs = kwargs.get('max_documents', 5)
         self.max_passages = kwargs.get('max_passages', 10)
@@ -128,7 +135,7 @@ class BeerQASource(DocumentSource):
             keywords = self.extract_keywords(query)
 
         # Get the initial set of documents using BM25
-        res = self.jdb.wikipedia.document_client.search(index=self.index_name,
+        res = self.document_client.search(index=self.index_name,
                                                         query=self.build_query(query,
                                                                                keywords=keywords),
                                                         size=max(30, self.max_docs),

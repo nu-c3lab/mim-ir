@@ -71,7 +71,10 @@
                         "max_documents": 30,
                         "max_passages": 5,
                         "passage_ranking_mode": "msmarco_cross",
-                        "generate_keywords": true
+                        "generate_keywords": true,
+                        "creds_uri": "",
+                        "creds_username": "",
+                        "creds_password": ""
                     }
                 ],
                 "project_model": {
