@@ -263,9 +263,6 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # from . import mim_run
-    # app.register_blueprint(mim_run.bp)
-
     mim_system = Mim("mim_core/evaluation/MimAnalyticsQuestions/mim_config.json")
 
     # a simple page that says hello
@@ -276,42 +273,37 @@ def create_app(test_config=None):
     # a simple homepage with navigation bar
     @app.route('/', methods=['GET', 'POST'])
     def home():
-        if 'question_box' in request.form:
-            answer, mqr = mim_system.answer_question(request.form['question_box'])
-            # answer = 'springfield'
-            answer_output = "Answer: " + answer
+        if 'question_box' in request.form and request.form['question_box']:
+            question = request.form['question_box']
+            answer, mqr = mim_system.answer_question(question)
+            # answer = 'Springfield'
+            answer_output = answer
+
             steps_output = format_plan_output(mqr.to_json())
+            # steps_output = format_plan_output(test_plan)
         else:
+            question = ""
             answer_output = ""
             steps_output = []
 
-        return render_template('home.html', answer_field=answer_output, steps=steps_output)
+        return render_template('home.html', question=question, answer_field=answer_output, steps=steps_output)
 
     return app
 
+def replace_ref_denotation(s):
+    return s.replace(' @@', ' #').replace('@@', '')
+
 def format_plan_output(plan) -> list[dict]:
     out = []
-    for s in plan['steps'][1:]:
+    steps = plan['steps'][1:] if plan['steps'][0]['step_type'] == 'complex' else plan['steps']
+    for s in steps:
         out.append({
             'step_type': s['step_type'],
-            'qdmr': s['qdmr'],
+            'qdmr': replace_ref_denotation(s['qdmr']),
             'operator_type': s['operator_type'],
             'operator_subtype': s['operator_subtype'],
-            'generated_question': s['question_text'] if s['question_text'] else s['qdmr'],
+            'generated_question': replace_ref_denotation(s['question_text']) if s['question_text'] else replace_ref_denotation(s['qdmr']),
             'entities': list(s['entities'].keys()),
-            'answer_type': s['expected_answer_type'][0]
+            'answer_type': s['expected_answer_type'][0].capitalize()
         })
-    # for s in plan.steps[1:]:
-    #     out.append({
-    #         'step_type': s.step_type,
-    #         'qdmr': s.qdmr,
-    #         'operator_type': s.operator_type,
-    #         'operator_subtype': s.operator_subtype,
-    #         'generated_question': s.question_text if s.question_text else s.qdmr,
-    #         'entities': list(s.entities.keys()),
-    #         'answer_type': s.expected_answer_type[0]
-    #     })
     return out
-
-
-
