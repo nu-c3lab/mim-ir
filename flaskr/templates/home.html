@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Mim{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <br>
+    Please enter a question:
+    <form method="POST">
+      <input type="text" name="question_box"></input>
+      <button type="submit" name="submit_button">Submit</button>
+    </form>
+
+    {{answer_field}}
+
+    <br><br>
+
+    {% for step in steps %}
+        <button class="accordion">Step {{loop.index}} - {{step.generated_question}}</button>
+        <div class="panel">
+            <p>Step Type: {{step.step_type}} </p>
+            <p>QDMR: {{step.qdmr}} </p>
+            <p>Operator Type: {{step.operator_type}} </p>
+            <p>Operator Subtype: {{step.operator_subtype}}</p>
+            <p>Generated Question: {{step.generated_question}}</p>
+            <p>Entities: {{step.entities}}</p>
+            <p>Answer Type: {{step.answer_type}}</p>
+        </div>
+    {% endfor %}
+{% endblock %}

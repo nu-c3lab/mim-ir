@@ -32,4 +32,6 @@ include mim_core/components/Search/indices/*
 exclude mim_core/components/Search/indices/*.npz
 include mim_core/components/Search/data/*
 include requirements.txt
-
+graft flaskr/static
+graft flaskr/templates
+global-exclude *.pyc
