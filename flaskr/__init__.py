@@ -1,5 +1,5 @@
 import os
-
+import json
 from flask import (Flask, render_template, request)
 from mim_core.components.Mim import Mim
 
@@ -304,6 +304,7 @@ def format_plan_output(plan) -> list[dict]:
             'operator_subtype': s['operator_subtype'],
             'generated_question': replace_ref_denotation(s['question_text']) if s['question_text'] else replace_ref_denotation(s['qdmr']),
             'entities': list(s['entities'].keys()),
-            'answer_type': s['expected_answer_type'][0].capitalize()
+            'answer_type': s['expected_answer_type'][0].capitalize(),
+            'answer': json.loads(s['result'])['answer']['0'] if '0' in json.loads(s['result'])['answer'] else None
         })
     return out

@@ -35,6 +35,8 @@ python -m spacy download en_core_web_trf
 
 ## Usage
 
+To run an instance of Mim using Python, you can use the following code.
+
 ```python
 from mim_core.components.Mim import Mim
 
@@ -44,3 +46,18 @@ answer, plan = system.answer_question("What is the capital of Illinois?")
 
 print(answer)
 ```
+
+## Running with User Interface
+This section details how to run an instance of Mim with the provided GUI.
+
+First, you'll need to set up the environment variable:
+```commandline
+export FLASK_APP=flaskr
+```
+
+Then, you can run the following command from the base directory of this repo in order to start FLask app:
+```commandline
+flask run
+```
+
+The application should now be running at `http://127.0.0.1:5000/`. Navigate there to try out the app.
