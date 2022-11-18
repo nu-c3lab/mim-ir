@@ -17,6 +17,7 @@
             "type": "WikidataOntology",
             "spacy_model": "en_core_web_trf"
         },
+        "entity_extraction_method": "spacy",
         "relation_extraction_method": "ontology",
         "question_generator": {
             "type": "RuleBasedQuestionGenerator"
@@ -62,12 +63,13 @@
                 "document_sources": [
                     {
                         "type": "BeerQASource",
+                        "index_name": "beerqa_wiki_docs",
                         "max_documents": 30,
                         "max_passages": 5,
                         "passage_ranking_mode": "msmarco_cross",
                         "generate_keywords": true,
-                        "creds_uri": "",
-                        "creds_username": "",
+                        "creds_uri": "http://localhost:9200/",
+                        "creds_username": "elastic",
                         "creds_password": ""
                     }
                 ],

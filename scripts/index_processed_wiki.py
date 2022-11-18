@@ -32,7 +32,7 @@ def process_line_beerqa_bz2(line):
             'doctype': 'doc',
             }
     # tell elasticsearch we're indexing documents
-    yield "{}\n{}".format(json.dumps({ 'index': { '_id': docid, '_routing': docid } }), json.dumps(item))
+    yield "{}\n{}".format(json.dumps({ 'index': { '_id': docid} }), json.dumps(item))
 
 def generate_indexing_queries_from_beerqa_bz2(bz2file, dry=False):
     if dry:
@@ -44,7 +44,7 @@ def generate_indexing_queries_from_beerqa_bz2(bz2file, dry=False):
 
 def index_chunk(chunk, index):
     es = Elasticsearch(timeout=600)
-    res = es.bulk(index=index, doc_type='doc', body='\n'.join(chunk), timeout='600s')
+    res = es.bulk(index=index, body='\n'.join(chunk), timeout='600s')
     assert not res['errors'], res
     return len(chunk)
 
@@ -161,7 +161,7 @@ def ensure_index(index, reindex):
 
 def query_generator(index_type):
     if index_type == "beerqa":
-        filelist = glob('data/enwiki-20200801-pages-articles-tokenized/*/wiki_*.bz2')
+        filelist = glob('/home/marko/Documents/mim-ir/data/enwiki-20200801-pages-articles-tokenized/*/wiki_*.bz2')
         for f in tqdm(filelist, position=1):
             yield from generate_indexing_queries_from_beerqa_bz2(f)
 
@@ -180,7 +180,7 @@ def main(args):
 
         pool = Pool()
         chunksize = 8192
-        for i, chunk in enumerate(chunks(query_generator(args.type), chunksize)):
+        for i, chunk in enumerate(chunks(query_generator('beerqa'), chunksize)):
             pool.apply_async(index_chunk, [chunk, index], error_callback=print, callback=update)
             #index_chunk(chunk, index)
             #update(len(chunk))
