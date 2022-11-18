@@ -15,7 +15,8 @@ If not, see <https://www.gnu.org/licenses/>.
 
 ## Installation
 
-The following installation instructions assume you are working with a new virtual environment.
+The following installation instructions assume you are working with a new virtual environment. All code was tested on 
+machine running Ubuntu 18.04.6 with Python 3.9.
 
 ### Install requirements to virtual environment
 
@@ -32,6 +33,16 @@ python -m spacy download en_core_web_sm
 python -m spacy download en_core_web_md
 python -m spacy download en_core_web_trf
 ```
+
+### Setup ElasticSearch and Document Index
+
+The following command will run the `setup.sh` script that downloads and creates a document index in ElasticSearch which is used as the knowledge source for retrieval.
+
+```commandline
+bash setup.sh
+```
+
+This process requires a significant amount of disk space, and we recommend running it on a system with at least 100GB of open space.
 
 ## Usage
 
