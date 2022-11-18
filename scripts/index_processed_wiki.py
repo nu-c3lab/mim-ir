@@ -180,7 +180,7 @@ def main(args):
 
         pool = Pool()
         chunksize = 8192
-        for i, chunk in enumerate(chunks(query_generator(args.type), chunksize)):
+        for i, chunk in enumerate(chunks(query_generator('beerqa'), chunksize)):
             pool.apply_async(index_chunk, [chunk, index], error_callback=print, callback=update)
             #index_chunk(chunk, index)
             #update(len(chunk))
