@@ -17,6 +17,7 @@
             "type": "WikidataOntology",
             "spacy_model": "en_core_web_trf"
         },
+        "entity_extraction_method": "spacy",
         "relation_extraction_method": "ontology",
         "question_generator": {
             "type": "RuleBasedQuestionGenerator"
