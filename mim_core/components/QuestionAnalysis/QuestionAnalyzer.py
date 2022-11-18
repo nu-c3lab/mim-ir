@@ -139,7 +139,7 @@ class QuestionAnalyzer(object):
                         step.parent.entities[span] = step.entities[span]
         for step in LevelOrderIter(root):
             for span, ents in step.entities.items():
-                if type(ents) == list:
+                if ents and type(ents) == list:
                     step.entities[span] = min(ents, key=lambda ent: ent['id'])
 
     def falcon_extraction(self,
@@ -348,6 +348,8 @@ class QuestionAnalyzer(object):
             step.entities = falcon_results['entities']
         elif self.entity_extraction_method == 'opentapioca' and opentapioca_results['entities']:
             step.entities = opentapioca_results['entities']
+        elif self.entity_extraction_method == 'spacy':
+            step.entities = {chunk.text: [] for chunk in self.ontology.spacy_model(step.qdmr).noun_chunks}
         else:
             step.entities = self.ontology.extract_canonical_entities(step.qdmr, single_term = step.operator_type=='select' and step.step_type=='low')
         # step.entities = falcon_results['entities'] if self.entity_extraction_method == 'falcon' and falcon_results['entities'] \
