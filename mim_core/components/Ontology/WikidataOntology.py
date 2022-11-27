@@ -22,7 +22,7 @@ from mim_core.components.Ontology.Ontology import Ontology
 import mim_core.components.Ontology.RelationshipPatterns as relationship_patterns
 from mim_core.components.models import get_model
 from spacy_canonicalizer.DatabaseConnection import get_wikidata_instance
-from jumbodb import Jumbo
+# from jumbodb import Jumbo
 from functools import reduce
 from json import loads
 from typing import List
@@ -44,7 +44,8 @@ class WikidataOntology(Ontology):
         self.sorted_aliases = sorted(self.relationship_canonicalizations.keys(), key=len, reverse=True)
         self.filter_patterns = relationship_patterns.filter_patterns
         self.project_patterns = relationship_patterns.project_patterns
-        self.db = Jumbo(True)
+        # self.db = Jumbo(True)
+        self.database_uri = kwargs.get('uri')
 
     def replace_in_list(self, lst, replace_string, start, end):
         for i in range(start, end):
@@ -67,7 +68,7 @@ class WikidataOntology(Ontology):
         :param text: String from which to extract entities
         :return: A dictionary mapping entities as they exist in the original text to the canonical form.
         """
-        canonicalizer_db = get_wikidata_instance()
+        canonicalizer_db = get_wikidata_instance(self.database_uri)
         canonicalizer_db.cache["chain"].clear()
         parsed = self.spacy_model(text, component_cfg={"entityLinker": {"single_term": single_term, "expected_types": expected_types, "nlp": self.spacy_medium}})
         #return {entity.span.text:{"id": entity.identifier, "label": entity.label, "description": entity.description, "span": entity.span} for entity in parsed._.linkedEntities.entities}
@@ -163,43 +164,43 @@ class WikidataOntology(Ontology):
         else:
             return " ".join([ent['label'] for ent in canon_entities.values()])
 
-    def get_entities_of_type(self, entity: str, max_depth=10) -> List[str]:
-        """
-        Retrieves all instances of the class entity (canonicalized from the given string).
-        :param entity: Entity of which to retrieve categories.
-        :param max_depth: Maximum depth to traverse up the entity parent hierarchy to retrieve categories.
-        :return: List of entity tuples as (id, name).
-        """
-        canonicalizer_db = get_wikidata_instance()
-        canonicalizer_db.cache["chain"].clear()
-        doc = self.spacy_model(entity, component_cfg={"entityLinker": {"single_term": True}})
-        parent_entity_ids = reduce(lambda a, ent: a + ent.get_subclasses(max_depth), doc._.linkedEntities, [])
-        return self.db.wikidata.get_instances(parent_entity_ids)
+    # def get_entities_of_type(self, entity: str, max_depth=10) -> List[str]:
+    #     """
+    #     Retrieves all instances of the class entity (canonicalized from the given string).
+    #     :param entity: Entity of which to retrieve categories.
+    #     :param max_depth: Maximum depth to traverse up the entity parent hierarchy to retrieve categories.
+    #     :return: List of entity tuples as (id, name).
+    #     """
+    #     canonicalizer_db = get_wikidata_instance()
+    #     canonicalizer_db.cache["chain"].clear()
+    #     doc = self.spacy_model(entity, component_cfg={"entityLinker": {"single_term": True}})
+    #     parent_entity_ids = reduce(lambda a, ent: a + ent.get_subclasses(max_depth), doc._.linkedEntities, [])
+    #     return self.db.wikidata.get_instances(parent_entity_ids)
 
-    def get_entity_categories(self, entity: str, max_depth=10) -> List[str]:
-        """
-        Retrieves all parent categories of the entities canonicalized from the given string.
-        :param entity: Entity of which to retrieve categories.
-        :param max_depth: Maximum depth to traverse up the entity parent hierarchy to retrieve categories.
-        :return: List of entity tuples as (id, name).
-        """
-        canonicalizer_db = get_wikidata_instance()
-        canonicalizer_db.cache["chain"].clear()
-        doc = self.spacy_model(entity, component_cfg={"entityLinker": {"single_term": True}})
-        entity_ids = reduce(lambda a, ent: a + ent.get_categories(max_depth), doc._.linkedEntities, [])
-        with self.db.wikidata.Session() as session:
-            return self.db.wikidata.get_entities_by_id(entity_ids, session, source='wikidata')
+    # def get_entity_categories(self, entity: str, max_depth=10) -> List[str]:
+    #     """
+    #     Retrieves all parent categories of the entities canonicalized from the given string.
+    #     :param entity: Entity of which to retrieve categories.
+    #     :param max_depth: Maximum depth to traverse up the entity parent hierarchy to retrieve categories.
+    #     :return: List of entity tuples as (id, name).
+    #     """
+    #     canonicalizer_db = get_wikidata_instance()
+    #     canonicalizer_db.cache["chain"].clear()
+    #     doc = self.spacy_model(entity, component_cfg={"entityLinker": {"single_term": True}})
+    #     entity_ids = reduce(lambda a, ent: a + ent.get_categories(max_depth), doc._.linkedEntities, [])
+    #     with self.db.wikidata.Session() as session:
+    #         return self.db.wikidata.get_entities_by_id(entity_ids, session, source='wikidata')
 
-    def is_expected_type(self, entity: str, expected_types: List[str]) -> bool:
-        """
+    # def is_expected_type(self, entity: str, expected_types: List[str]) -> bool:
+    #     """
 
-        :param entity:
-        :param expected_types:
-        :return:
-        """
-        entity_cats = self.get_entity_categories(entity, max_depth=10)
-        entity_types = [cat.name for cat in entity_cats]
-        return any(ex_type in entity_types for ex_type in expected_types)
+    #     :param entity:
+    #     :param expected_types:
+    #     :return:
+    #     """
+    #     entity_cats = self.get_entity_categories(entity, max_depth=10)
+    #     entity_types = [cat.name for cat in entity_cats]
+    #     return any(ex_type in entity_types for ex_type in expected_types)
 
     def get_root_paths(self, entity, include_instance_of=False):
         # TODO: Replace this code with spacy-canonicalizer chain stuff?
@@ -210,90 +211,90 @@ class WikidataOntology(Ontology):
         else:
             return [[entity.id]]
 
-    def longest_common_path(self, path_set_1, path_set_2):
-        def longest_intersection(patha, pathb):
-            for idx in range(min(len(patha), len(pathb))):
-                if patha[idx] != pathb[idx]:
-                    if idx > 0:
-                        # second element (path length) cannot simply be the length of the path, because it needs to be the shortest path to the root
-                        return (patha[idx-1], self.get_depth(patha[idx-1]))
-                    else:
-                        return (None, 0)
-            # If the loop completed, the shorter path is a subpath of the other
-            if len(patha) < len(pathb):
-                return (patha[-1], self.get_depth(patha[-1]))
-            else:
-                return (pathb[-1], self.get_depth(pathb[-1]))
+    # def longest_common_path(self, path_set_1, path_set_2):
+    #     def longest_intersection(patha, pathb):
+    #         for idx in range(min(len(patha), len(pathb))):
+    #             if patha[idx] != pathb[idx]:
+    #                 if idx > 0:
+    #                     # second element (path length) cannot simply be the length of the path, because it needs to be the shortest path to the root
+    #                     return (patha[idx-1], self.get_depth(patha[idx-1]))
+    #                 else:
+    #                     return (None, 0)
+    #         # If the loop completed, the shorter path is a subpath of the other
+    #         if len(patha) < len(pathb):
+    #             return (patha[-1], self.get_depth(patha[-1]))
+    #         else:
+    #             return (pathb[-1], self.get_depth(pathb[-1]))
 
-        # for path1 in path_set_1:
-        #     for path2 in path_set_2:
-        #         print(path1, path2, longest_intersection(path1, path2))
+    #     # for path1 in path_set_1:
+    #     #     for path2 in path_set_2:
+    #     #         print(path1, path2, longest_intersection(path1, path2))
 
-        return max([longest_intersection(path1, path2) for path1 in path_set_1 for path2 in path_set_2], key=lambda x: x[1])
+    #     return max([longest_intersection(path1, path2) for path1 in path_set_1 for path2 in path_set_2], key=lambda x: x[1])
 
-    def least_common_ancestor(self, entity1_id, entity2_id):
-        with self.db.wikidata.Session() as session:
-            entity1 = self.db.wikidata.get_entities_by_id([entity1_id], session, source='wikidata')[0]
-            entity2 = self.db.wikidata.get_entities_by_id([entity2_id], session, source='wikidata')[0]
+    # def least_common_ancestor(self, entity1_id, entity2_id):
+    #     with self.db.wikidata.Session() as session:
+    #         entity1 = self.db.wikidata.get_entities_by_id([entity1_id], session, source='wikidata')[0]
+    #         entity2 = self.db.wikidata.get_entities_by_id([entity2_id], session, source='wikidata')[0]
 
-            entity1_paths = self.get_root_paths(entity1, include_instance_of=True)
-            # print('-------------------', entity1.name, '-------------------')
-            # print('longest of', len(entity1_paths), max(entity1_paths, key=lambda x: len(x)))
-            entity2_paths = self.get_root_paths(entity2, include_instance_of=True)
-            # print('-------------------', entity2.name, '-------------------')
-            # print('longest of', len(entity2_paths), max(entity2_paths, key=lambda x: len(x)))
-            return self.longest_common_path(entity1_paths, entity2_paths)
+    #         entity1_paths = self.get_root_paths(entity1, include_instance_of=True)
+    #         # print('-------------------', entity1.name, '-------------------')
+    #         # print('longest of', len(entity1_paths), max(entity1_paths, key=lambda x: len(x)))
+    #         entity2_paths = self.get_root_paths(entity2, include_instance_of=True)
+    #         # print('-------------------', entity2.name, '-------------------')
+    #         # print('longest of', len(entity2_paths), max(entity2_paths, key=lambda x: len(x)))
+    #         return self.longest_common_path(entity1_paths, entity2_paths)
 
-           #if entity1 == entity2:
-           #    return entity1
-           #if 'subclass of' in entity1.relationships:
-           #    queue1 = [rel.object for rel in entity1.relationships['subclass of'] if rel.graph=='wikidata']
-           #elif 'instance of' in entity1.relationships:
-           #    queue1 = [rel.object for rel in entity1.relationships['instance of'] if rel.graph=='wikidata']
-           #else:
-           #    queue1 = []
-           #if 'subclass of' in entity2.relationships:
-           #    queue2 = [rel.object for rel in entity2.relationships['subclass of'] if rel.graph=='wikidata']
-           #elif 'instance of' in entity2.relationships:
-           #    queue2 = [rel.object for rel in entity2.relationships['instance of'] if rel.graph=='wikidata']
-           #else:
-           #    queue2 = []
-           #explored1 = [entity1] + queue1
-           #explored2 = [entity2] + queue2
+    #        #if entity1 == entity2:
+    #        #    return entity1
+    #        #if 'subclass of' in entity1.relationships:
+    #        #    queue1 = [rel.object for rel in entity1.relationships['subclass of'] if rel.graph=='wikidata']
+    #        #elif 'instance of' in entity1.relationships:
+    #        #    queue1 = [rel.object for rel in entity1.relationships['instance of'] if rel.graph=='wikidata']
+    #        #else:
+    #        #    queue1 = []
+    #        #if 'subclass of' in entity2.relationships:
+    #        #    queue2 = [rel.object for rel in entity2.relationships['subclass of'] if rel.graph=='wikidata']
+    #        #elif 'instance of' in entity2.relationships:
+    #        #    queue2 = [rel.object for rel in entity2.relationships['instance of'] if rel.graph=='wikidata']
+    #        #else:
+    #        #    queue2 = []
+    #        #explored1 = [entity1] + queue1
+    #        #explored2 = [entity2] + queue2
 
-           #while len(queue1) or len(queue2):
-           #    if len(queue1):
-           #        anc1 = queue1.pop(0)
-           #        if anc1 in explored2:
-           #            return anc1
-           #        new_nodes = list(filter(lambda ent: ent not in explored1, map(lambda rel: rel.object, anc1.relationships['subclass of']))) if 'subclass of' in anc1.relationships else []
-           #        queue1 += new_nodes
-           #        explored1 += new_nodes
-           #    if len(queue2):
-           #        anc2 = queue2.pop(0)
-           #        if anc2 in explored1:
-           #            return anc2
-           #        new_nodes = list(filter(lambda ent: ent not in explored2, map(lambda rel: rel.object, anc2.relationships['subclass of']))) if 'subclass of' in anc2.relationships else []
-           #        queue2 += new_nodes
-           #        explored2 += new_nodes
+    #        #while len(queue1) or len(queue2):
+    #        #    if len(queue1):
+    #        #        anc1 = queue1.pop(0)
+    #        #        if anc1 in explored2:
+    #        #            return anc1
+    #        #        new_nodes = list(filter(lambda ent: ent not in explored1, map(lambda rel: rel.object, anc1.relationships['subclass of']))) if 'subclass of' in anc1.relationships else []
+    #        #        queue1 += new_nodes
+    #        #        explored1 += new_nodes
+    #        #    if len(queue2):
+    #        #        anc2 = queue2.pop(0)
+    #        #        if anc2 in explored1:
+    #        #            return anc2
+    #        #        new_nodes = list(filter(lambda ent: ent not in explored2, map(lambda rel: rel.object, anc2.relationships['subclass of']))) if 'subclass of' in anc2.relationships else []
+    #        #        queue2 += new_nodes
+    #        #        explored2 += new_nodes
 
-    def get_depth(self, entity_id):
-        with self.db.wikidata.Session() as session:
-            entity = self.db.wikidata.get_entities_by_id([entity_id], session, source='wikidata')[0]
-            if 'subclass of' in entity.relationships:
-                queue = list(map(lambda rel: (rel.object, 2), entity.relationships['subclass of']))
-            elif 'instance of' in entity.relationships and entity.id != 35120:
-                queue = list(map(lambda rel: (rel.object, 2), entity.relationships['instance of']))
-            else:
-                return 1 # Starting with 1 instead of zero because we are assuming a 'virtual' root node that connects all Wikidata nodes without a parent class
-            explored = [(entity, 1)] + queue
-            while len(queue):
-                anc = queue.pop(0)
-                if 'subclass of' in anc[0].relationships:
-                    new_nodes = list(filter(lambda ent: ent[0] not in map(lambda x: x[0], explored), map(lambda rel: (rel.object, anc[1] + 1), anc[0].relationships['subclass of'])))
-                    queue += new_nodes
-                    explored += new_nodes
-                else:
-                    return anc[1]
-            # Should never get here
-            return None
+    # def get_depth(self, entity_id):
+    #     with self.db.wikidata.Session() as session:
+    #         entity = self.db.wikidata.get_entities_by_id([entity_id], session, source='wikidata')[0]
+    #         if 'subclass of' in entity.relationships:
+    #             queue = list(map(lambda rel: (rel.object, 2), entity.relationships['subclass of']))
+    #         elif 'instance of' in entity.relationships and entity.id != 35120:
+    #             queue = list(map(lambda rel: (rel.object, 2), entity.relationships['instance of']))
+    #         else:
+    #             return 1 # Starting with 1 instead of zero because we are assuming a 'virtual' root node that connects all Wikidata nodes without a parent class
+    #         explored = [(entity, 1)] + queue
+    #         while len(queue):
+    #             anc = queue.pop(0)
+    #             if 'subclass of' in anc[0].relationships:
+    #                 new_nodes = list(filter(lambda ent: ent[0] not in map(lambda x: x[0], explored), map(lambda rel: (rel.object, anc[1] + 1), anc[0].relationships['subclass of'])))
+    #                 queue += new_nodes
+    #                 explored += new_nodes
+    #             else:
+    #                 return anc[1]
+    #         # Should never get here
+    #         return None

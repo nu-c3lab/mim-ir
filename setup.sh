@@ -11,3 +11,9 @@ bash scripts/download_processed_wiki.sh
 echo "Running Elasticsearch and indexing Wikipedia documents..."
 bash scripts/launch_elasticsearch_7.15.2.sh
 python -m scripts.index_processed_wiki
+
+bash scripts/download_wikidata_db.sh
+
+bash scripts/create_wikidata_db.sh
+
+bash scripts/launch_wikidata_db.sh
