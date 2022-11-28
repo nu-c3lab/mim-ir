@@ -15,9 +15,10 @@
         },
         "ontology": {
             "type": "WikidataOntology",
-            "spacy_model": "en_core_web_trf"
+            "spacy_model": "en_core_web_trf",
+            "uri": "postgresql://doadmin@localhost:5432/wikidata"
         },
-        "entity_extraction_method": "spacy",
+        "entity_extraction_method": "ontology",
         "relation_extraction_method": "ontology",
         "question_generator": {
             "type": "RuleBasedQuestionGenerator"

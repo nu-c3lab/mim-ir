@@ -393,8 +393,8 @@ class QuestionAnalyzer(object):
 
         # Canoncalize the relationship in the steps
         start_time = time()
-        relationships = falcon_results['relations'] + self.ontology.extract_canonical_relationship(step.qdmr, step.operator_type, step.entities) if self.relation_extraction_method == 'falcon' \
-                        else self.ontology.extract_canonical_relationship(step.qdmr, step.operator_type, step.entities)
+        relationships = [] # falcon_results['relations'] + self.ontology.extract_canonical_relationship(step.qdmr, step.operator_type, step.entities) if self.relation_extraction_method == 'falcon' \
+                        # else self.ontology.extract_canonical_relationship(step.qdmr, step.operator_type, step.entities)
 
         # Don't care about relationships if this is the select step
         if step.operator_type != 'select':
