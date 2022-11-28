@@ -14,6 +14,6 @@ python -m scripts.index_processed_wiki
 
 bash scripts/download_wikidata_db.sh
 
-bash scripts/create_wikidata_db.sh
-
 bash scripts/launch_wikidata_db.sh
+
+bash scripts/initialize_wikidata_db.sh
