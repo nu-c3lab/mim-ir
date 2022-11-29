@@ -1,4 +1,3 @@
-jumbodb
 pandas
 numpy
 spacy==3.0.6
